@@ -60,21 +60,33 @@ final class CrackStationTests: XCTestCase
         else {print("hash value not found.Password could not be cracked")}
     }
     func testEmptyString() throws {
-        // Given
-        let password = ""
+      // Given
+        let password = "aaaaaaaa"
         let shaHash = encrypt(password)
 
         // When
-        if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
-
+        let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
         // Then
-       {print("CrackedPassword",crackedPassword)
-         XCTAssertEqual(crackedPassword, nil)}
-         else {print("invalid /empty password")}
+        XCTAssertEqual(crackedPassword, nil)
        }
 
+      func testInvalidShaHash() throws
+      {
+        //Given
+       let password = "MaliniMasilamani"
+       let shaHash = encrypt(password)
+        //When
+         if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
+        // Then
+          {print("CrackedPassword",crackedPassword)
+          XCTAssertEqual(crackedPassword, password)}
+          else {
+            //print("CrackedPassword",crackedPassword)
+            print("invalid password")}
+       }
+      //helper function
       private func encrypt(_ password: String) -> String
-       {
+      {
         let dataToHash = Data(password.utf8)
         let prefix = "SHA 1 digest: "
         let shaHashDescription = String(Insecure.SHA1.hash(data: dataToHash).description)
