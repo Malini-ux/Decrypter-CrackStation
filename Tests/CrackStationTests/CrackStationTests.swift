@@ -61,7 +61,7 @@ final class CrackStationTests: XCTestCase
     }
     func testEmptyString() throws {
       // Given
-        let password = "aaaaaaaa"
+        let password = ""
         let shaHash = encrypt(password)
 
         // When
