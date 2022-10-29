@@ -1,5 +1,6 @@
 import XCTest
 @testable import CrackStation
+import Crypto
 final class CrackStationTests: XCTestCase 
 {
      func testLoadingLookupTableFromDisk() throws
@@ -15,11 +16,25 @@ final class CrackStationTests: XCTestCase
        }
        else {print("nothing")}
      }
+
+     func testAllOneLetterSha1Permutations() throws {
+        for letter in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" {
+            // Given
+            let password = String(letter)
+            let shaHash = encrypt(password)
+
+            // When
+            let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
+
+            // Then
+            XCTAssertEqual(crackedPassword, password)
+        }
+     }
        func testTwoLetter_aL() throws
      {  //Given
         let password = "aL"
-        let shaHash = "f53e1d8e6cfe27e2e3f1ce86632ef02097c0f453"
-    
+        //let shaHash = "f53e1d8e6cfe27e2e3f1ce86632ef02097c0f453"
+        let shaHash = encrypt(password)
        //When
        if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
        //Then
@@ -46,7 +61,8 @@ final class CrackStationTests: XCTestCase
     }
     func testEmptyString() throws {
         // Given
-        let shaHash = ""
+        let password = ""
+        let shaHash = encrypt(password)
 
         // When
         if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
@@ -56,6 +72,16 @@ final class CrackStationTests: XCTestCase
          XCTAssertEqual(crackedPassword, nil)}
          else {print("invalid /empty password")}
        }
+
+      private func encrypt(_ password: String) -> String
+       {
+        let dataToHash = Data(password.utf8)
+        let prefix = "SHA 1 digest: "
+        let shaHashDescription = String(Insecure.SHA1.hash(data: dataToHash).description)
+        let shaHash = String(shaHashDescription.dropFirst(prefix.count - 1))
+        return shaHash
+      }
+
     }
     
 
