@@ -21,7 +21,7 @@ let package = Package(
         .target(
             name: "CrackStation",
             dependencies: [],
-            resources: [.process("sha1.json"),.process("genhash.py")]),
+            resources: [.process("sha1.json"),.process("genLookUpTable.py")]),
         .testTarget(
             name: "CrackStationTests",
             dependencies: ["CrackStation"]),
