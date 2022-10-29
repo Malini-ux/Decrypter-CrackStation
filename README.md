@@ -1,6 +1,7 @@
 # CrackStation
 
-TITLE : Crack Station POC v1 and v2
+TITLE : Crack Station POC v1 and v2.
+
 AUTHOR: Malini Masilamani
 
 DESCRIPTION: 
