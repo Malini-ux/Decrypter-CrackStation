@@ -1,6 +1,7 @@
 import Foundation
 public struct CrackStation: Decrypter {
-    private let lookuptable : [String : String]    
+    private let lookuptable : [String : String]  
+    //Load the dictionary only once during object creation  
     public init() {
         do {lookuptable = try GetLookUpTable().loadDictionaryFromDisk()}
         catch{ lookuptable = ["":""]}

@@ -47,8 +47,10 @@ final class CrackStationTests: XCTestCase {
         // When
         if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
         // Then
-        {print("CrackedPassword",crackedPassword)
-         XCTAssertEqual(crackedPassword, nil)}
+        {
+         print("CrackedPassword",crackedPassword)
+         XCTAssertEqual(crackedPassword, nil)
+         }
         else {print("error")}
        }
     public func testCrackPasswordThreeCharactersSHA256() throws  {    
