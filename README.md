@@ -1,28 +1,84 @@
-# CrackStation
+# CrackStation, a Decrypter implementation
 
-TITLE : Crack Station POC v1 and v2.
+Decrypter to crack passwords encrypted with SHA1 and SHA256.
 
-AUTHOR: Malini Masilamani
+# OverView 
 
-DESCRIPTION: 
-The CrackStation library consists of the implementation to decrypt a password from a hash value to plain-text.
-The password fo length one or two characters that can be either an uppercase,lowercase or a digit.
+Passwords are encrypted in different way . There are a lot of crackstation that you can find in internet ( for example https://crackstation.net ). The goal for these website are to find the passwords by decrypt there hash  .
 
-PURPOSE AND USES: 
-Password decryption can be used by people to ensure data privacy and protection where the credentials can be secured and monitored.
+# Mission Statement 
 
-LOOKUPTABLE GENERATION: 
-A python file called genLookUpTable.py when run, creates the sha1.json file with the look up table based on the sha1 hash algorithm.
-The file path for the JSON file must be configured in the python file.
-This lookuptable is read to fetch the hash values needed for password decryption.
+My Swift library is a cracking station for passwords coded with sha1 and sha256. My Decrypter cracks unsalted hashes. <br/>
+It is able to crack to any password up to three characters in length, which matches the regular expression `[A-Za-z0-9!?]{1,3}` and is encrypted 
+using `SHA-1` or `SHA-256`.
+This library is for a project in my school and the first purpose of it is not to crack password of real person.
+You can use it to understand how a crackstation works.
 
-HOW TO USE/REFERENCE API: 
-The github repositry consisting of the source code is available here:git@github.com:Malini-ux/CrackStation.git
-Any package or program that wants to use this library must import CrackStation in the source code and include it as a dependancy in the swift package
-The protocol Decrypter is a public API that can be used to decrypt the input hash value.
+# Installation 
 
+The  [Swift Package Manager](https://www.swift.org/package-manager)  is "a tool for managing the distribution of Swift code. It's integrated with Swift build system to automate the process of downloading, compiling, and linking dependencies."
+<br/>
+<br/>
+Once you have your Swift package set up, add CrackStation to the list of dependencies in your file:
 
+```
+dependencies: [
+    .package(url: "git@github.com:arthurolivier1/CrackStation.git", .upToNextMajor(from : "1.0.6" ))
+]
+```
 
+# Usage
+
+**The API**<br/>
+
+There are two functions signatures in my CrackStation. 
+* The first one comes from the CrackStation Decrypter , the name of the function is `decrypt` .
+This function need one parameter : the shaHash that we want to crack ( a String ).
+This function return the password who correspond to the shaHash. ( a String too ). If there is no correpondance, it returns `nil`.
+This is the function signature for the decrypt function :
+```
+public func decrypt(shaHash: String) -> String?
+```
+
+* The second one is used to import the data.json file who contains the lookuptable , the name of the function is `loadDictionaryFromDisk` .
+This function doesn't need parameters .
+This function return a dictionnary who correspond to our lookuptable. ( [ String : String ] ). 
+This is the function signature for the decrypt function :
+```
+func loadDictionaryFromDisk() throws -> [String : String]
+```
+<br/>
+
+**An Example**<br/>
+
+To use this library , you have to import the crackstation in your Swift project with the link of the github and the lastest stable realease> 
+After the importation, you will be able to use the files of the library in your project.
+To use the crackstation in your source code, you have to import the packacge "CrackStation". 
+After, you have to create a Decrypter with two function and an object decrypter :
+- an init function in witch you will assign to the decrypter Crackstation()
+- a decrypt function which ask a String and which return a string . In this function, you have to use the decrypt(shaHash: String) of the Crackstation 
+object to crack the password.
+You can verify that the code was cracked by using unit tests.
+```
+import CrackStation
+
+public struct CrackStationWrapper: Decrypter {
+    private let testObject: Decrypter
+
+    public init() {
+        testObject = CrackStation()
+    }
+
+    public func decrypt(shaHash: String) -> String? {
+        let crackedPassword = testObject.decrypt(shaHash: shaHash)
+        return crackedPassword
+    }
+}
+```
+
+# Author 
+
+Malini Masilamani , student in Oregon State University
 
 
 

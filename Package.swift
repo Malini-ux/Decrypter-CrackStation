@@ -23,7 +23,7 @@ let package = Package(
         .target(
             name: "CrackStation",
             dependencies: [.product(name: "Crypto", package: "swift-crypto")],
-            resources: [.process("sha1.json"),.process("genLookUpTable.py")]),
+            resources: [.process("data.json"),.process("genLookUpTable.py")]),
         .testTarget(
             name: "CrackStationTests",
             dependencies: ["CrackStation"]),

@@ -1,99 +1,67 @@
 import XCTest
 @testable import CrackStation
 import Crypto
-final class CrackStationTests: XCTestCase 
-{
-     func testLoadingLookupTableFromDisk() throws
-     {  //Given
-        let password = "m"
-        let shaHash = "6b0d31c0d563223024da45691584643ac78c96e8"
-       //When
-       if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
-       //Then
-       {
-       print("CrackedPassword",crackedPassword)
-       XCTAssertEqual(crackedPassword,password)
-       }
-       else {print("nothing")}
-     }
-
-     func testAllOneLetterSha1Permutations() throws {
-        for letter in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" {
-            // Given
-            let password = String(letter)
-            let shaHash = encrypt(password)
-
-            // When
-            let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
-
-            // Then
-            XCTAssertEqual(crackedPassword, password)
-        }
-     }
-       func testTwoLetter_aL() throws
-     {  //Given
-        let password = "aL"
-        //let shaHash = "f53e1d8e6cfe27e2e3f1ce86632ef02097c0f453"
-        let shaHash = encrypt(password)
-       //When
-       if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
-       //Then
-       {
-       print("CrackedPassword",crackedPassword)
-       XCTAssertEqual(crackedPassword,password)
-       }
-       else {print("hash value not found.Password could not be cracked")}
-     }
-      func testTwoLetter_99() throws {
-        // Given
-        let password = "99"
-        let shaHash = "9a79be611e0267e1d943da0737c6c51be67865a0"
-
+final class CrackStationTests: XCTestCase {    
+    public func testCrackPasswordTwoCharactersSHA256() throws  {        
+       // Given
+        let password = "3!"
+        let shaHash = "fe98796a19658454aadaa2a42bf75a14ebb1f4c88ad00ccf5ddc276546ba1299"
         // When
         if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
-
         // Then
         {
         print("CrackedPassword",crackedPassword)
         XCTAssertEqual(crackedPassword, password)
         }
-        else {print("hash value not found.Password could not be cracked")}
+        else {print("Password could not be cracked")}
+    }
+    public func testCrackPasswordThreeCharactersSHA1() throws  {    
+       // Given
+        let password = "3!A"
+        let shaHash = "eb1ae4d5f92a8042540bcc82a1119dc95bf475b08264fcca5f9a155b6fb1b0d3"
+        // When
+        if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
+        // Then
+        {
+        print("CrackedPassword",crackedPassword)
+        XCTAssertEqual(crackedPassword, password)
+        }
+        else {print("Password could not be cracked")}
+    }
+    public func testCrackPasswordOneCharacterSHA1() throws  {
+       // Given
+        let password = "!"
+        let shaHash = "0ab8318acaf6e678dd02e2b5c343ed41111b393d"
+        // When
+        if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
+        // Then
+        {
+        print("CrackedPassword",crackedPassword)
+        XCTAssertEqual(crackedPassword, password)
+        }
+        else {print("Password could not be cracked")}
     }
     func testEmptyString() throws {
       // Given
-        let password = ""
-        let shaHash = encrypt(password)
-
+        let shaHash = ""
         // When
-        let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
+        if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
         // Then
-        XCTAssertEqual(crackedPassword, nil)
+        {print("CrackedPassword",crackedPassword)
+         XCTAssertEqual(crackedPassword, nil)}
+        else {print("error")}
        }
-
-      func testInvalidShaHash() throws
-      {
-        //Given
-       let password = "MaliniMasilamani"
-       let shaHash = encrypt(password)
-        //When
-         if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
+    public func testCrackPasswordThreeCharactersSHA256() throws  {    
+       // Given
+        let password = "a3?"
+        let shaHash = "e1e388ce26fff681abf75ad7989ebef8e7f97bc68198cf394f05096141f69bd1"
+        // When
+        if let crackedPassword = CrackStation().decrypt(shaHash: shaHash)
         // Then
-          {print("CrackedPassword",crackedPassword)
-          XCTAssertEqual(crackedPassword, password)}
-          else {
-            //print("CrackedPassword",crackedPassword)
-            print("invalid password")}
-       }
-      //helper function
-      private func encrypt(_ password: String) -> String
-      {
-        let dataToHash = Data(password.utf8)
-        let prefix = "SHA 1 digest: "
-        let shaHashDescription = String(Insecure.SHA1.hash(data: dataToHash).description)
-        let shaHash = String(shaHashDescription.dropFirst(prefix.count - 1))
-        return shaHash
-      }
-
+        {
+        print("CrackedPassword",crackedPassword)
+        XCTAssertEqual(crackedPassword, password)
+        }
+        else {print("Password could not be cracked")}
     }
-    
-
+}
