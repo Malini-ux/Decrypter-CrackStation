@@ -1,6 +1,5 @@
 import XCTest
 @testable import CrackStation
-import Crypto
 final class CrackStationTests: XCTestCase {    
     public func testCrackPasswordTwoCharactersSHA256() throws  {        
        // Given
@@ -13,7 +12,7 @@ final class CrackStationTests: XCTestCase {
         print("CrackedPassword",crackedPassword)
         XCTAssertEqual(crackedPassword, password)
         }
-        else {print("Password could not be cracked")}
+        else {print("Password could not be cracked.")}
     }
     public func testCrackPasswordThreeCharactersSHA1() throws  {    
        // Given
@@ -51,7 +50,7 @@ final class CrackStationTests: XCTestCase {
          print("CrackedPassword",crackedPassword)
          XCTAssertEqual(crackedPassword, nil)
          }
-        else {print("error")}
+        else {print("Password could not be cracked")}
        }
     public func testCrackPasswordThreeCharactersSHA256() throws  {    
        // Given
