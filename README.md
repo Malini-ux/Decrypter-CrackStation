@@ -20,7 +20,7 @@ Once you have your Swift package set up, add CrackStation to the list of depende
 
 ```
 dependencies: [
-    .package(url: "git@github.com:Malini-ux/CrackStation.git", .upToNextMajor(from : "2.2.2" ))
+    .package(url: "git@github.com:Malini-ux/CrackStation.git", .upToNextMajor(from : "2.2.4" ))
 ]
 ```
 
